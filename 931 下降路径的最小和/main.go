@@ -9,6 +9,35 @@ func main() {
 	println(minFallingPathSum(input))
 }
 
+func minFallingPathSum2(matrix [][]int) int {
+	// 初始化dp数组
+	n := len(matrix)
+	dp := make([][]int, n)
+	for row := range dp {
+		dp[row] = make([]int, n)
+	}
+	if n == 1 {
+		return matrix[0][0]
+	}
+	// 动态规划
+	for i := 0; i < n; i++ {
+		for j := 0; j < n; j++ {
+			if i == 0 {
+				dp[i][j] = matrix[i][j]
+			} else if j == 0 {
+				dp[i][j] = minIntSlice([]int{dp[i-1][j], dp[i-1][j+1]}) + matrix[i][j]
+			} else if j == n-1 {
+				dp[i][j] = minIntSlice([]int{dp[i-1][j-1], dp[i-1][j]}) + matrix[i][j]
+			} else {
+				dp[i][j] = minIntSlice([]int{dp[i-1][j-1], dp[i-1][j], dp[i-1][j+1]}) + matrix[i][j]
+			}
+		}
+	}
+	result := minIntSlice(dp[n-1])
+	return result
+
+}
+
 func minFallingPathSum(matrix [][]int) int {
 	// 初始化dp数组
 	n := len(matrix)
