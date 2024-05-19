@@ -9,7 +9,7 @@ func main() {
 	println(minFallingPathSum(input))
 }
 
-func minFallingPathSum2(matrix [][]int) int {
+func minFallingPathSum2(matrix [][]int) int { // 该解法没有使用“抵达前”的思想，dp对应位置即抵达该位置时的花费，0行除外。
 	// 初始化dp数组
 	n := len(matrix)
 	dp := make([][]int, n)
