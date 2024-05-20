@@ -1,7 +1,7 @@
 package main
 
 func main() {
-	println(longestPalindrome("babad"))
+	println(longestPalindrome("ccc"))
 }
 
 func longestPalindrome(s string) string {
@@ -22,9 +22,9 @@ func longestPalindrome(s string) string {
 		}
 	}
 	// 动态规划
-	for l := 3; l < length; l++ { // length即截取的长度，从短的开始
-		for i := 0; i < length-l; i++ { // i为起始位置
-			j := i + l - 1
+	for l := 2; l < length; l++ { // length即截取的长度，从短的开始
+		for i := 0; i <= length-l-1; i++ { // i为起始位置
+			j := i + l
 			if s[i] == s[j] && dp[i+1][j-1] == 1 {
 				dp[i][j] = 1
 			} else {
