@@ -1,51 +1,51 @@
 package main
 
 func main() {
-	println(longestPalindrome("ccc"))
+	println(longestPalindrome("cbbd"))
 }
 
 func longestPalindrome(s string) string {
+	resultL := 0
+	resultI := 0
+
 	// 初始化dp数组
 	length := len(s)
 	dp := make([][]int, length)
 	for row := range dp {
 		dp[row] = make([]int, length)
 	}
-	// 临界状态长度为1或者2时
-	for i := 0; i < length; i++ {
-		dp[i][i] = 1
-	}
-	for i := 0; i < length-1; i++ {
-		j := i + 1
-		if s[i] == s[j] {
-			dp[i][j] = 1
-		}
-	}
-	// 动态规划
-	for l := 2; l < length; l++ { // length即截取的长度，从短的开始
-		for i := 0; i <= length-l-1; i++ { // i为起始位置
-			j := i + l
-			if s[i] == s[j] && dp[i+1][j-1] == 1 {
-				dp[i][j] = 1
-			} else {
-				dp[i][j] = 0
-			}
 
-		}
-	}
-	// 得出结果
-	result := 0
-	resultIndex := 0
-	for i := 0; i < length; i++ {
-		for j := 0; j < length; j++ {
-			if dp[i][j] == 1 {
-				if j-i > result {
-					result = j - i
-					resultIndex = i
+	// 动态规划
+	for l := 0; l < length; l++ { // length即截取的长度，从短的开始
+		for i := 0; i <= length-l-1; i++ { // i为起始位置
+			if l == 0 { //
+				dp[i][i] = 1
+				resultL = 0
+				resultI = i
+			} else if l == 1 {
+				j := i + 1
+				if s[i] == s[j] {
+					dp[i][j] = 1
+					if j-i > resultL {
+						resultL = j - i
+						resultI = i
+					}
+				}
+			} else {
+				j := i + l
+				if s[i] == s[j] && dp[i+1][j-1] == 1 {
+					dp[i][j] = 1
+					if j-i > resultL {
+						resultL = j - i
+						resultI = i
+					}
+				} else {
+					dp[i][j] = 0
 				}
 			}
+
 		}
 	}
 
-	return s[resultIndex : resultIndex+result+1]
+	return s[resultI : resultL+resultI+1]
 }
